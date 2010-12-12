@@ -141,6 +141,25 @@ namespace QuickSort.Tests
 			Assert.AreEqual(0, target.RightSplit.Count, "RightSplit count");
 		}
 
+		[Test]
+		public void Sort_problem_with_zero_size_is_a_basic_problem()
+		{
+			var source = new ArraySegment<int>(new int[0]);
+
+			var target = new SplitByMedianItem(source);
+
+			Assert.IsTrue(target.IsBasicCase);
+		}
+
+		[Test]
+		public void Sort_problem_with_1_size_is_a_basic_problem()
+		{
+			var source = new ArraySegment<int>(new int[1]);
+
+			var target = new SplitByMedianItem(source);
+
+			Assert.IsFalse(target.IsBasicCase);
+		}
 
 
 		public static T[] SegmentToArray<T>(ArraySegment<T> segment)

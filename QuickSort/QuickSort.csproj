@@ -38,8 +38,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArraySegmentExtension.cs" />
+    <Compile Include="IRecursiveQuickSort.cs" />
+    <Compile Include="ISortProblem.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RecursiveQuickSort.cs" />
     <Compile Include="SplitByMedianItem.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
