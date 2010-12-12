@@ -41,6 +41,7 @@
     <Compile Include="MockRecursiveQuickSort.cs" />
     <Compile Include="MockSortProblem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RecursiveQuickSortAcceptanceTest.cs" />
     <Compile Include="RecursiveQuickSortTest.cs" />
     <Compile Include="SplitByMedianItemTest.cs" />
   </ItemGroup>
