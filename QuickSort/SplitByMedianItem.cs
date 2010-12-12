@@ -6,64 +6,75 @@ namespace QuickSort
 {
 	public class SplitByMedianItem: ISortProblem
 	{
-		public ArraySegment<int> LeftSplit;
-		public ArraySegment<int> RightSplit;
 		private ArraySegment<int> source;
 
-		public SplitByMedianItem(ArraySegment<int> source)
+		public ArraySegment<int> LeftSplit { get; private set; }
+		public ArraySegment<int> RightSplit { get; private set; }
+
+		public SplitByMedianItem(int[] source) : this(new ArraySegment<int>(source)) 
+		{
+		}
+
+		public SplitByMedianItem(ArraySegment<int> source) 
 		{
 			this.source = source;
 
-			if (IsBasicCase)
+			if (source.Count == 0)
 			{
-				return; 				
+				return;
 			}
 
-			int i = 0; 
-			int j = source.Upperbound();
+			int left = 0;
+			int right = source.Upperbound();
 			int median = source.GetSegmentItem(source.Upperbound() / 2);
 
 			do
 			{
-				while ((source.GetSegmentItem(i) < median) && (i < source.Upperbound()))
-					i++;
-				while ((median < source.GetSegmentItem(j)) && (j > 0))
-					j--;
-
-				if (i <= j)
+				while (source.GetSegmentItem(left) < median)
 				{
-					source.SwapItems(i, j);
-					i++; j--;
+					++left;
 				}
 
-			} while (i <= j);
+				while (median < source.GetSegmentItem(right))
+				{
+					--right;					
+				}
 
-			if (0 < j)
-				LeftSplit = source.CreateSubSegment(0, j);
+				if (left <= right)
+				{
+					source.SwapItems(left, right);
+					++left; 
+					--right;
+				}
 
-			if (i < source.Upperbound())
-				RightSplit = source.CreateSubSegment(i, source.Upperbound());
+			} while (left <= right);
+
+			if (0 < right)
+			{
+				LeftSplit = source.CreateSubSegment(0, right);				
+			}
+
+			if (left < source.Upperbound())
+			{
+				RightSplit = source.CreateSubSegment(left, source.Upperbound());				
+			}
 
 		}
 
-		public IEnumerable<ISortProblem> GetReducedProblems()
-		{
-			var result = new List<ISortProblem>();
-			result.Add(new SplitByMedianItem(LeftSplit));
-			result.Add(new SplitByMedianItem(RightSplit));
-
-			return result;
-		}
-
-
-		public bool IsBasicCase
+		bool ISortProblem.IsBasicCase
 		{
 			get
 			{
-				bool isBasicCase = (source.Count == 0);
-				return isBasicCase;
+				return (source.Count <= 2);
 			}
 		}
 
+		IEnumerable<ISortProblem> ISortProblem.GetReducedProblems()
+		{
+			var result = new ISortProblem[2];
+			result[0] = new SplitByMedianItem(LeftSplit);
+			result[1] = new SplitByMedianItem(RightSplit);
+			return result;
+		}
 	}
 }

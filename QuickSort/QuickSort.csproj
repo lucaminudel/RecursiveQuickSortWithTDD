@@ -38,7 +38,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArraySegmentExtension.cs" />
-    <Compile Include="IRecursiveQuickSort.cs" />
+    <Compile Include="ISortProblemSolver.cs" />
     <Compile Include="ISortProblem.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

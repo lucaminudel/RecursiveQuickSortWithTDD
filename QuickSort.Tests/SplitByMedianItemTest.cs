@@ -146,7 +146,7 @@ namespace QuickSort.Tests
 		{
 			var source = new ArraySegment<int>(new int[0]);
 
-			var target = new SplitByMedianItem(source);
+			ISortProblem target = new SplitByMedianItem(source);
 
 			Assert.IsTrue(target.IsBasicCase);
 		}
@@ -156,7 +156,27 @@ namespace QuickSort.Tests
 		{
 			var source = new ArraySegment<int>(new int[1]);
 
-			var target = new SplitByMedianItem(source);
+			ISortProblem target = new SplitByMedianItem(source);
+
+			Assert.IsTrue(target.IsBasicCase);
+		}
+
+		[Test]
+		public void Sort_problem_with_2_size_is_a_basic_problem()
+		{
+			var source = new ArraySegment<int>(new int[2]);
+
+			ISortProblem target = new SplitByMedianItem(source);
+
+			Assert.IsTrue(target.IsBasicCase);
+		}
+
+		[Test]
+		public void Sort_problem_with_3_size_is_a_basic_problem()
+		{
+			var source = new ArraySegment<int>(new int[3]);
+
+			ISortProblem target = new SplitByMedianItem(source);
 
 			Assert.IsFalse(target.IsBasicCase);
 		}

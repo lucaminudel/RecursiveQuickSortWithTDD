@@ -1,16 +1,22 @@
-﻿using System;
-
+﻿
 namespace QuickSort
 {
-	public class RecursiveQuickSort : IRecursiveQuickSort
+	public class RecursiveQuickSort : ISortProblemSolver
 	{
 
-		public void CalculateSortProblemReduction(ISortProblem sortProblem)
+		public void Sort(int[] arrayToBeSorted)
 		{
-			CalculateSortProblemReduction(sortProblem, this);
+			ISortProblem sortProblem = new SplitByMedianItem(arrayToBeSorted);
+			RecursivelySolveSortProblem(sortProblem);
 		}
 
-		public void CalculateSortProblemReduction(ISortProblem sortProblem, IRecursiveQuickSort reducedSortProblemSolver)
+		public void RecursivelySolveSortProblem(ISortProblem sortProblem)
+		{
+			var reducedSortProblemSolver = this;
+			reducedSortProblemSolver.ReduceThenSolveReducedProblems(sortProblem, reducedSortProblemSolver);
+		}
+
+		public void ReduceThenSolveReducedProblems(ISortProblem sortProblem, ISortProblemSolver reducedSortProblemSolver)
 		{
 			if (sortProblem.IsBasicCase)
 			{
@@ -18,15 +24,15 @@ namespace QuickSort
 			}
 
 			var reducedProblems = sortProblem.GetReducedProblems();
-			foreach (var reducedProblem in reducedProblems)
+			foreach (var problem in reducedProblems)
 			{
-				reducedSortProblemSolver.CalculateSortProblemReduction(reducedProblem);
+				reducedSortProblemSolver.SolveReducedProblem(problem);
 			}
 		}
 
-		public void Sort(int[] arrayToBeSorted)
+		void ISortProblemSolver.SolveReducedProblem(ISortProblem sortProblem)
 		{
-			CalculateSortProblemReduction(new SplitByMedianItem(new ArraySegment<int>(arrayToBeSorted)));
+			RecursivelySolveSortProblem(sortProblem);
 		}
 	}
 }

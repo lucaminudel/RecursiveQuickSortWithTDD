@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace QuickSort.Tests
 {
-	class MockRecursiveQuickSort : IRecursiveQuickSort
+	class MockSortProblemSolver : ISortProblemSolver
 	{
 		private readonly List<ISortProblem> calculateSortProblemReduction = new List<ISortProblem>();
 		private int calculateSortProblemReductionExpectedCallCount = 0;
@@ -24,7 +24,7 @@ namespace QuickSort.Tests
 		}
 
 
-		void IRecursiveQuickSort.CalculateSortProblemReduction(ISortProblem sortProblem)
+		void ISortProblemSolver.SolveReducedProblem(ISortProblem sortProblem)
 		{
 			if (sortProblem != calculateSortProblemReduction[calculateSortProblemReductionCallCount])
 			{

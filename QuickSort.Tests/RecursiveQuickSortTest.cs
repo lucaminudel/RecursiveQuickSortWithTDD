@@ -7,20 +7,20 @@ namespace QuickSort.Tests
 	public class RecursiveQuickSortTest
 	{
 		[Test]
-		public void CalculateSortProblemReduction_just_finish_with_basic_case_sort_problem()
+		public void ReduceThenSolveReducedProblems_just_finish_with_basic_case_sort_problem()
 		{
 			var mockSortProblem = new MockSortProblem();
 			mockSortProblem.SetExpectedCall_IsBasicCase(true);
-			IRecursiveQuickSort reducedSortProblemSolver = null;
+			ISortProblemSolver reducedSortProblemSolver = null;
 			var target = new RecursiveQuickSort();
 
-			target.CalculateSortProblemReduction(mockSortProblem, reducedSortProblemSolver);
+			target.ReduceThenSolveReducedProblems(mockSortProblem, reducedSortProblemSolver);
 
 			mockSortProblem.VerifyExpectations();
 		}
 
 		[Test]
-		public void CalculateSortProblemReduction_with_non_basic_case_sort_problem_send_reduced_problems_to_the_solver()
+		public void ReduceThenSolveReducedProblems_with_non_basic_case_sort_problem_send_reduced_problems_to_the_solver()
 		{
 			var mockSortProblem = new MockSortProblem();
 			mockSortProblem.SetExpectedCall_IsBasicCase(false);
@@ -29,13 +29,13 @@ namespace QuickSort.Tests
 			IEnumerable<ISortProblem> reducedProblems = new[] {reducedProblem1, reducedProblem2};
 			mockSortProblem.SetExpectedCall_GetReducedProblems(reducedProblems);
 					
-			var mockReducedSortProblemSolver = new MockRecursiveQuickSort();
+			var mockReducedSortProblemSolver = new MockSortProblemSolver();
 			mockReducedSortProblemSolver.SetExpectedCall_CalculateSortProblemReduction(reducedProblem1);
 			mockReducedSortProblemSolver.SetExpectedCall_CalculateSortProblemReduction(reducedProblem2);
 
 
 			var target = new RecursiveQuickSort();
-			target.CalculateSortProblemReduction(mockSortProblem, mockReducedSortProblemSolver);
+			target.ReduceThenSolveReducedProblems(mockSortProblem, mockReducedSortProblemSolver);
 
 
 			mockSortProblem.VerifyExpectations();
